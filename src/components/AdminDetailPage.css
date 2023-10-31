@@ -1,0 +1,45 @@
+.pageHeading{
+    text-align: center;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid grey;
+}
+.searchContainer{
+    display: flex;
+    column-gap: 10px;
+
+}
+.searchContainer h2{
+    margin: 0;
+}
+.searchContainer span{
+    font-weight: bolder;
+    font-size: large;
+}
+.sectionHeader{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.noTolls{
+    text-align: center;
+    margin-top: 10px;
+}
+table{
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    /* border: 1px solid black; */
+    margin-top: 20px;
+}
+tr:first-of-type{
+    background-color: rgb(236, 226, 226);
+}
+th,td{
+ border: 1px solid black;
+}
+.deleteBtn{
+    color: rgb(144, 194, 239);
+}
