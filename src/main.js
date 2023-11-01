@@ -1,10 +1,12 @@
-import Vue from 'vue'
-import App from './App.vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import App from './App.vue';
+import VueRouter from 'vue-router';
 import { store } from './store';
-import OperatorPage from './components/OperatorPage.vue'
-import LandingPage from './components/LandingPage.vue'
-import AdminDetailPage from './components/AdminDetailPage.vue'
+import OperatorPage from './components/OperatorPage.vue';
+import LandingPage from './components/LandingPage.vue';
+import AdminDetailPage from './components/AdminDetailPage.vue';
+import OperatorDetailPage from './components/OperatorDetailPage.vue';
+import AdminVehicleEntryListingPage from './components/AdminVehicleEntryListingPage.vue'
 
 
 Vue.config.productionTip = false;
@@ -22,15 +24,15 @@ const routes = [
   {
     path:'/admindetail',
     component: AdminDetailPage,
-  }
-  // {
-  //     path:'/about',
-  //     component: AboutPage
-  // },
-  // {
-  //   path:'/cart',
-  //   component: cartPage
-  // }
+  },
+  {
+      path:'/operatorDetail',
+      component: OperatorDetailPage,
+  },
+  {
+    path:'/adminVehicleEntryPage',
+    component: AdminVehicleEntryListingPage,
+  },
 ];
 
 const router = new VueRouter({

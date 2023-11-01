@@ -8,6 +8,13 @@ export const store = new Vuex.Store({
         logedin: { id:'',password:'', isAdmin:''},
         registeredUsers:[],
         tolls:[],
+        vehicleEntry:[],
+    },
+    getters:{
+        logedin: state => state.logedin,
+        registeredUsers:state => state.registeredUsers,
+        tolls:state => state.tolls,
+        vehicleEntry:state => state.vehicleEntry,
     },
     mutations:{
         setLogedinType(state,val){
@@ -24,6 +31,9 @@ export const store = new Vuex.Store({
        },
        logOut(state){
         state.logedin = { id:'',password:'', isAdmin:''};
+       },
+       makeNewVehicleEntry(state,payload){
+        state.vehicleEntry.push(payload);
        }
     },
     actions:{
@@ -31,13 +41,16 @@ export const store = new Vuex.Store({
             context.commit('setLogedinType',payload);
         },
         addNewTolls(context,payload){
-            context.commit('addNewTolls',payload)
+            context.commit('addNewTolls',payload);
         },
         deleteToll(context,payload){
-            context.commit('deleteToll',payload)
+            context.commit('deleteToll',payload);
         },
         logOut(context){
-            context.commit('logOut')
+            context.commit('logOut');
+        },
+        makeNewVehicleEntry(context,payload){
+            context.commit('makeNewVehicleEntry',payload);
         }
     }
 }

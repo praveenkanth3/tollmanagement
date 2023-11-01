@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div v-if="logedin.isAdmin">
         <h1 class="pageHeading">Admin Toll List Page</h1>
         <div class="header">
-            <div>Toll Management Application</div>
+            <div>Toll Management Application <button @click="onClickVehicleEntry">click to see vehicles entry</button></div>
             <div>
                 <div>Hello,{{ logedin.id }}</div>
                 <div class="deleteBtn" @click="onClickLogout">Logout</div>
@@ -90,10 +90,8 @@
  /* eslint-disable */ 
 import './AdminDetailPage.css';
 import { store } from '../store';
-// import { ref } from 'vue'
 import AddNewTollModel from './AddNewTollModel.vue';
 import {initialAddnewTollData} from './constants';
-// let searchInput = ref("");
 export default {
     name: 'AdminDetailPage',
     data() {
@@ -136,6 +134,9 @@ export default {
         onClickLogout(){
             this.$store.dispatch('logOut');
             this.$router.push('/')
+        },
+        onClickVehicleEntry(){
+            this.$router.push('/adminVehicleEntryPage')
         }
     }
 }
