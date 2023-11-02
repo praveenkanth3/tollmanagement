@@ -103,13 +103,17 @@ export default {
     },
     computed: {
         logedin() {
-            return store.state.logedin
+            // return store.state.logedin
+            return this.$store.getters.logedin
         },
         tollData(){
-            return store.state.tolls
+            // return store.state.tolls
+            return this.$store.getters.tolls
         },
         filteredList() {
-            return store.state.tolls.filter((toll) => toll.tollName.toLowerCase().includes(this.searchInput.toLowerCase()));
+            // return store.state.tolls.filter((toll) => toll.tollName.toLowerCase().includes(this.searchInput.toLowerCase()));
+            return this.$store.getters.tolls.filter((toll) => toll.tollName.toLowerCase().includes(this.searchInput.toLowerCase()));
+
 }
     },
     components: {

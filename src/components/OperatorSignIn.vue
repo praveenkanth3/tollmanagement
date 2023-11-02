@@ -50,7 +50,7 @@
 </template>
 <script>
 import './Popup.css';
-import { store } from '../store';
+// import { store } from '../store';
 export default {
     name: 'OperatorSignIn',
     props:{
@@ -58,7 +58,7 @@ export default {
     },
     computed:{
       tolls(){
-        return store.state.tolls
+        return this.$store.getters.tolls
       },
     },
     data (){

@@ -78,7 +78,7 @@
 <script>
 import './AdminDetailPage.css';
 import OperatorEntryModal from './OperatorEntryModal.vue';
-import { store } from '../store';
+// import { store } from '../store';
 
 export default {
     name: 'OperatorDetailPage',
@@ -95,7 +95,8 @@ export default {
     watch: {
         // eslint-disable-next-line 
         'newEntry.type': function (newVal, oldVal) {
-            const SelectedTollData = store.state.tolls.find(val => val.tollName === this.newEntry.toll);
+            const SelectedTollData = this.$store.getters.tolls.find(val => val.tollName === this.newEntry.toll);
+            // const SelectedTollData = store.state.tolls.find(val => val.tollName === this.newEntry.toll);
             const selectedVehicleTypeData = SelectedTollData?.fareDetails.find(val => val.name === newVal);
             this.newEntry.traiff = selectedVehicleTypeData?.single;
         },
@@ -107,7 +108,7 @@ export default {
     },
     computed: {
         filteredList() {
-            return store.state.vehicleEntry.filter((vehicle) => vehicle.vehicleNo.toLowerCase().includes(this.searchInput.toLowerCase()));
+            return this.$store.getters.vehicleEntry.filter((vehicle) => vehicle.vehicleNo.toLowerCase().includes(this.searchInput.toLowerCase()));
         },
         logedin(){
         return this.$store.getters.logedin;
@@ -154,7 +155,7 @@ export default {
         updateVehicleNumber(newVal, oldVal){
             const SelectedTollData = this.$store.getters.tolls.find(val => val.tollName === this.newEntry.toll);
             const selectedVehicleTypeData = SelectedTollData?.fareDetails.find(val => val.name === newVal);
-            const enteredVehicle = store.state.vehicleEntry.find((vehicle) => vehicle.vehicleNo === newVal);
+            const enteredVehicle = this.$store.getters.vehicleEntry.find((vehicle) => vehicle.vehicleNo === newVal);
             const diff= this.hoursDiff(enteredVehicle?.time, new Date().toLocaleString('en-US', { timeStyle: 'medium' }));
             if(diff >= 1){
                 this.newEntry.traiff = selectedVehicleTypeData?.return;

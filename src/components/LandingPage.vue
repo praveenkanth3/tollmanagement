@@ -12,7 +12,7 @@
 
 <script>
 import AdminPopupModal from './AdminPopupModal.vue';
-import { store } from '../store'
+// import { store } from '../store'
 export default {
   name: 'LandingPage',
   components:{
@@ -28,7 +28,8 @@ export default {
   },
   computed:{
     logedin(){
-      return store.state.logedin;
+      // return store.state.logedin;
+      return this.$store.getters.logedin;
     }
   },
   methods:{
