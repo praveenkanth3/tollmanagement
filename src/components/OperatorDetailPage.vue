@@ -154,11 +154,14 @@ export default {
         },
         updateVehicleNumber(newVal, oldVal){
             const SelectedTollData = this.$store.getters.tolls.find(val => val.tollName === this.newEntry.toll);
-            const selectedVehicleTypeData = SelectedTollData?.fareDetails.find(val => val.name === newVal);
+            const selectedVehicleTypeData = SelectedTollData?.fareDetails.find(val => val.name === this.newEntry.type);
             const enteredVehicle = this.$store.getters.vehicleEntry.find((vehicle) => vehicle.vehicleNo === newVal);
             const diff= this.hoursDiff(enteredVehicle?.time, new Date().toLocaleString('en-US', { timeStyle: 'medium' }));
-            if(diff >= 1){
+            if(diff <= 1){
                 this.newEntry.traiff = selectedVehicleTypeData?.return;
+            }
+            else{
+                this.newEntry.traiff = selectedVehicleTypeData?.single;
             }
         }
     }
