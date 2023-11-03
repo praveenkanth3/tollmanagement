@@ -40,6 +40,6 @@ tr:first-of-type{
 th,td{
  border: 1px solid black;
 }
-.deleteBtn{
+.deleteBtn,.logoutBtn{
     color: rgb(144, 194, 239);
 }

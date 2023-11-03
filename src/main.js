@@ -1,39 +1,12 @@
 import Vue from 'vue';
 import App from './App.vue';
 import VueRouter from 'vue-router';
-import { store } from './store';
-import OperatorPage from './components/OperatorPage.vue';
-import LandingPage from './components/LandingPage.vue';
-import AdminDetailPage from './components/AdminDetailPage.vue';
-import OperatorDetailPage from './components/OperatorDetailPage.vue';
-import AdminVehicleEntryListingPage from './components/AdminVehicleEntryListingPage.vue'
+import { store } from './store/store';
+import { routes } from './routers/routers';
 
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
-
-const routes = [
-  {
-    path:'/',
-    component: LandingPage
-  },
-  {
-      path:'/operator',
-      component: OperatorPage
-  },
-  {
-    path:'/admindetail',
-    component: AdminDetailPage,
-  },
-  {
-      path:'/operatorDetail',
-      component: OperatorDetailPage,
-  },
-  {
-    path:'/adminVehicleEntryPage',
-    component: AdminVehicleEntryListingPage,
-  },
-];
 
 const router = new VueRouter({
 routes

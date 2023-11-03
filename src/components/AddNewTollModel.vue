@@ -5,7 +5,8 @@
   </template>
   
   <script>
-  import './Popup.css';
+  import '../styles/Popup.css';
+  
   export default {
       name: 'AddNewTollModel',
   }

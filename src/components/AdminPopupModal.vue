@@ -1,45 +1,26 @@
 <template>
   <transition name="modal-fade">
     <div class="modal-backdrop">
-      <div class="modal"
-      >
-        <header
-          class="modal-header"
-          id="modalTitle"
-        >
+      <div class="modal">
+        <header class="modal-header" id="modalTitle">
           Admin login
-          <button
-            type="button"
-            class="btn-close"
-            @click="onCloseModel"
-          >
+          <button type="button" class="btn-close" @click="onCloseModel">
             x
           </button>
         </header>
 
-        <section
-          class="modal-body"
-          id="modalDescription"
-        >
+        <section class="modal-body" id="modalDescription">
           <div>Admin Id</div>
-          <input v-bind:value="adminLogin.id" @input="onChangeAdminId($event.target.value)"/>
+          <input v-bind:value="adminLogin.id" @input="onChangeAdminId($event.target.value)" />
           <div>Password</div>
-          <input v-bind:value="adminLogin.password" @input="onChangeAdminPassword($event.target.value)"/>
+          <input v-bind:value="adminLogin.password" @input="onChangeAdminPassword($event.target.value)" />
         </section>
 
         <footer class="modal-footer">
-          <button
-           type="button"
-           class="btn-green"
-           @click="onSubmitAdminLogin"
-          >
+          <button type="button" class="btn-green" @click="onSubmitAdminLogin">
             Login
           </button>
-          <button
-            type="button"
-            class="btn-green"
-            @click="onCloseModel"
-          >
+          <button type="button" class="btn-green" @click="onCloseModel">
             Cancel
           </button>
         </footer>
@@ -49,16 +30,16 @@
 </template>
 
 <script>
-import './Popup.css';
+import '../styles/Popup.css';
 export default {
-    name: 'AdminPopup',
-    props:{
-        isAdminPopupVisible: Boolean,
-        onCloseModel: Function,
-        adminLogin: Object,
-        onChangeAdminId: Function,
-        onSubmitAdminLogin: Function,
-        onChangeAdminPassword: Function,
-    }
+  name: 'AdminPopup',
+  props: {
+    isAdminPopupVisible: Boolean,
+    onCloseModel: Function,
+    adminLogin: Object,
+    onChangeAdminId: Function,
+    onSubmitAdminLogin: Function,
+    onChangeAdminPassword: Function,
+  }
 }
 </script>

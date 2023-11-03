@@ -1,13 +1,10 @@
 <template>
-    <div v-if="logedin.id">
-        <h1 class="pageHeading">Operator Page</h1>
-        <div class="header">
-            <div>Toll Management Application</div>
-            <div>
-                <div>Hello,{{ logedin.id }}</div>
-                <div class="deleteBtn" @click="onClickLogOut">Logout</div>
-            </div>
-        </div>
+    <div>
+        <DetailPageHeader 
+         pageHeading="Operator Page" 
+         :loggedInUser="logedin.id" 
+         :onClickLogout="onClickLogOut" 
+        />
         <div class="sectionHeader">
             <div class="searchContainer">
                 <h2>Toll List</h2>
@@ -56,7 +53,6 @@
                                     <option value="LCV">LCV</option>
                                     <option value="Truck/Bus">Truck/Bus</option>
                                     <option value="Heavy vehicle">Heavy vehicle</option>
-
                                 </select>
                                 <div>Vehicle Number<span>*</span></div>
                                 <input placeholder="enter the number" v-model="newEntry.vehicleNo" />
@@ -76,12 +72,15 @@
     </div>
 </template>
 <script>
-import './AdminDetailPage.css';
+import '../styles/DetailPage.css';
 import OperatorEntryModal from './OperatorEntryModal.vue';
-// import { store } from '../store';
+import DetailPageHeader from './DetailPageHeader.vue';
+import { mapGetters } from 'vuex';
+
 
 export default {
     name: 'OperatorDetailPage',
+
     data() {
         return {
             searchInput: '',
@@ -89,14 +88,27 @@ export default {
             newEntry: { toll: '', traiff: 0, vehicleNo: '', type: '', time: '' }
         }
     },
+
     mounted() {
         this.newEntry.toll = this.$route.query.tollLoc;
     },
+
+    computed: {
+        ...mapGetters({
+            logedin: 'logedin',
+            vehicleEntry: 'vehicleEntry',
+            tolls: 'tolls'
+        }),
+
+        filteredList() {
+            return this.vehicleEntry.filter((vehicle) => vehicle.vehicleNo.toLowerCase().includes(this.searchInput.toLowerCase()));
+        },
+    },
+
     watch: {
         // eslint-disable-next-line 
         'newEntry.type': function (newVal, oldVal) {
-            const SelectedTollData = this.$store.getters.tolls.find(val => val.tollName === this.newEntry.toll);
-            // const SelectedTollData = store.state.tolls.find(val => val.tollName === this.newEntry.toll);
+            const SelectedTollData = this.tolls.find(val => val.tollName === this.newEntry.toll);
             const selectedVehicleTypeData = SelectedTollData?.fareDetails.find(val => val.name === newVal);
             this.newEntry.traiff = selectedVehicleTypeData?.single;
         },
@@ -106,23 +118,13 @@ export default {
             handler: 'updateVehicleNumber'
         }
     },
-    computed: {
-        filteredList() {
-            return this.$store.getters.vehicleEntry.filter((vehicle) => vehicle.vehicleNo.toLowerCase().includes(this.searchInput.toLowerCase()));
-        },
-        logedin(){
-        return this.$store.getters.logedin;
-      }
-    },
-    components: {
-        OperatorEntryModal,
-    },
+
     methods: {
         onModelClose() {
             this.isEntryModelIsVisible = false;
         },
+
         onClickNewEntry() {
-            console.log(this.$store.getters.logedin);
             if (this.newEntry.traiff !== 0 && this.newEntry.vehicleNo.length > 0 && this.newEntry.type.length > 0) {
                 this.newEntry.time = new Date().toLocaleString('en-US', { timeStyle: 'medium' });
                 this.$store.dispatch('makeNewVehicleEntry', this.newEntry);
@@ -132,19 +134,23 @@ export default {
                 alert('all the fields are mandatory please fill');
             }
         },
-        onClickLogOut(){
+
+        onClickLogOut() {
             this.$store.dispatch('logOut');
-            this.$router.push('/')
+            this.$router.push({ name: 'Landing' })
         },
+
         fromSeconds(secs) {
             let hours = parseInt(secs / 3600);
             return hours;
         },
+
         toSeconds(time) {
             let splitTime = time.split(/[: ]/);
             if (splitTime[3].toUpperCase() == 'PM') splitTime[0] = +splitTime[0] + 12;
             return (splitTime[0] * 3600) + (splitTime[1] * 60) + +splitTime[2];
         },
+
         hoursDiff(sTime, eTime) {
             if (sTime && eTime) {
                 let diff = this.toSeconds(eTime) - this.toSeconds(sTime);
@@ -152,18 +158,24 @@ export default {
                 return this.fromSeconds(diff);
             }
         },
-        updateVehicleNumber(newVal, oldVal){
-            const SelectedTollData = this.$store.getters.tolls.find(val => val.tollName === this.newEntry.toll);
+
+        updateVehicleNumber(newVal, oldVal) {
+            const SelectedTollData = this.tolls.find(val => val.tollName === this.newEntry.toll);
             const selectedVehicleTypeData = SelectedTollData?.fareDetails.find(val => val.name === this.newEntry.type);
-            const enteredVehicle = this.$store.getters.vehicleEntry.find((vehicle) => vehicle.vehicleNo === newVal);
-            const diff= this.hoursDiff(enteredVehicle?.time, new Date().toLocaleString('en-US', { timeStyle: 'medium' }));
-            if(diff <= 1){
+            const enteredVehicle = this.vehicleEntry.find((vehicle) => vehicle.vehicleNo === newVal);
+            const diff = this.hoursDiff(enteredVehicle?.time, new Date().toLocaleString('en-US', { timeStyle: 'medium' }));
+            if (diff <= 1) {
                 this.newEntry.traiff = selectedVehicleTypeData?.return;
             }
-            else{
+            else {
                 this.newEntry.traiff = selectedVehicleTypeData?.single;
             }
         }
-    }
+    },
+
+    components: {
+        OperatorEntryModal,
+        DetailPageHeader
+    },
 }
 </script>

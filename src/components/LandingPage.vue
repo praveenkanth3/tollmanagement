@@ -6,56 +6,73 @@
       <button  @click="isAdminPopupVisible = true">Admin</button>
       <button><router-link to="/operator">Operator</router-link></button>
     </div>
-    <AdminPopupModal v-show="isAdminPopupVisible" :onCloseModel="onCloseModel" :adminLogin="adminLogin" :onChangeAdminId="onChangeAdminId" :onChangeAdminPassword="onChangeAdminPassword" :onSubmitAdminLogin="onSubmitAdminLogin"/>
+    <AdminPopupModal
+     v-if="isAdminPopupVisible" 
+     :onCloseModel="onCloseModel" 
+     :adminLogin="adminLogin" 
+     :onChangeAdminId="onChangeAdminId" 
+     :onChangeAdminPassword="onChangeAdminPassword" 
+     :onSubmitAdminLogin="onSubmitAdminLogin"
+    />
   </div>
 </template>
 
 <script>
 import AdminPopupModal from './AdminPopupModal.vue';
-// import { store } from '../store'
+import { mapGetters } from 'vuex';
+
+const ADMIN = 'admin';
+
 export default {
   name: 'LandingPage',
-  components:{
-    AdminPopupModal,
-  },
+
   data (){
     return{
       isAdminPopupVisible: false,
       adminLogin: { id:'',password:''},
     }
   },
-  props: {
-  },
+
   computed:{
-    logedin(){
-      // return store.state.logedin;
-      return this.$store.getters.logedin;
-    }
+
+    ...mapGetters({
+            logedin: 'logedin',
+        }),
   },
+
   methods:{
     onCloseModel(){
       this.isAdminPopupVisible = false;
+      window.adminLogged = false;
     },
+
     onChangeAdminId(value){
       this.adminLogin.id = value
     },
+
     onChangeAdminPassword(value){
       this.adminLogin.password = value
     },
+
     onSubmitAdminLogin(){
-      if(this.adminLogin.id === 'admin' && this.adminLogin.password === 'admin'){
+      if(this.adminLogin.id === ADMIN && this.adminLogin.password === ADMIN){
+        window.adminLogged = true;
         alert(`Successfully logedin as a Admin`)
         this.adminLogin.id = '';
         this.adminLogin.password = '';
         this.isAdminPopupVisible = false;
-        this.$store.dispatch('setLogedinType',{ id: 'admin', password:'admin', isAdmin: true});
-        this.$router.push('/admindetail')
-      }
-      else{
+        this.$store.dispatch('setLogedinType',{ id: ADMIN, password:ADMIN, isAdmin: true});
+        this.$router.push({name: 'AdminDetail'})
+      }else{
         alert(`invalid username or password`)
       }
     }
-  }
+  },
+  
+  components:{
+    AdminPopupModal,
+  },
+  
 }
 </script>
 
