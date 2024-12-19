@@ -1,37 +1,39 @@
 <template>
-    <div>
-        <DetailPageHeader 
-         pageHeading="Operator Page" 
-         :loggedInUser="logedin.id" 
-         :onClickLogout="onClickLogOut" 
-        />
-        <div class="sectionHeader">
-            <div class="searchContainer">
-                <h2>Toll List</h2>
-                <span>|</span>
-                <input placeholder="Search toll" v-model="searchInput" />
+    <div class="operatorDetail">
+        <div class="headerContainer">
+            <DetailPageHeader 
+            pageHeading="Operator Page" 
+            :loggedInUser="logedin.id" 
+            :onClickLogout="onClickLogOut" 
+            />
+            <div class="sectionHeader">
+                <div class="searchContainer">
+                    <h2>Toll List</h2>
+                    <span>|</span>
+                    <input placeholder="Search toll" v-model="searchInput" />
+                </div>
+                <div>
+                    <button @click="isEntryModelIsVisible = true">Add new Entry</button>
+                </div>
             </div>
-            <div>
-                <button @click="isEntryModelIsVisible = true">Add new Entry</button>
-            </div>
-        </div>
-        <div v-if="filteredList.length === 0" class="noTolls">No Tolls available</div>
-        <div v-else>
-            <table>
-                <tr>
-                    <th>Vehicle Type</th>
-                    <th>Vehicle Number</th>
-                    <th>Time</th>
-                    <th>Traiff</th>
-                </tr>
-                <tr v-for="vehicle in filteredList" v-bind:key="vehicle.vehicleNo">
-                    <td>{{ vehicle.type }}</td>
-                    <td>{{ vehicle.vehicleNo }}</td>
-                    <td>{{ vehicle.time }}</td>
-                    <td>{{ vehicle.traiff }}</td>
+            <div v-if="filteredList.length === 0" class="noTolls">No Tolls available</div>
+            <div v-else>
+                <table>
+                    <tr>
+                        <th>Vehicle Type</th>
+                        <th>Vehicle Number</th>
+                        <th>Time</th>
+                        <th>Traiff</th>
+                    </tr>
+                    <tr v-for="vehicle in filteredList" v-bind:key="vehicle.vehicleNo">
+                        <td>{{ vehicle.type }}</td>
+                        <td>{{ vehicle.vehicleNo }}</td>
+                        <td>{{ vehicle.time }}</td>
+                        <td>{{ vehicle.traiff }}</td>
 
-                </tr>
-            </table>
+                    </tr>
+                </table>
+            </div>
         </div>
         <OperatorEntryModal v-show="isEntryModelIsVisible">
             <template v-slot:addNewEntry>
@@ -179,3 +181,35 @@ export default {
     },
 }
 </script>
+
+<style>
+.operatorDetail {
+    background-image: url("../images/roadimg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;      
+    background-position: center;
+    height: 100%;
+    color: white;
+    table {
+        background-color: chocolate;
+        
+        tr:first-of-type {
+            background-color: inherit;
+        }
+    }
+    .headerContainer{
+        .sectionHeader{
+        button{
+            height: 30px;
+        border-radius: 10px;
+        background-color: white;
+        }
+        .searchContainer {
+            input {
+                border-radius: 10px;
+            }
+        }
+    }
+    }
+}
+</style>

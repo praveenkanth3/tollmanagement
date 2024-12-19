@@ -77,16 +77,37 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+
 .landingPageContent{
   display: flex;
   flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background-image:  url('../images/tollimage.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;      
+  background-position: center;
+  h1,h2 {
+    color: white;
+    text-shadow: 2px 2px 10px red;
+  }
 }
 .btns{
   display: flex;
   column-gap: 30px;
+  button {
+    height: 32px;
+    color: white;
+    background: red;
+    border-radius: 10px;
+    border: 2px solid;
+    width: fit-content;
+    a{
+      text-decoration: none;
+      color: white;
+    }
 }
-button{
-  width: fit-content;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="adminVehiEntry">
         <DetailPageHeader :loggedInUser="logedIn.id" :onClickLogout="onClickLogout" />
         <div class="sectionHeader">
             <div class="searchContainer">
@@ -75,3 +75,32 @@ export default {
 
 }
 </script>
+<style lang="scss">
+.adminVehiEntry{
+    background-image: url("../images/roadimg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;      
+    background-position: center;
+    height: 100%;
+    color: white;
+}
+table {
+        background-color: chocolate;
+        
+        tr:first-of-type {
+            background-color: inherit;
+        }
+    }
+.sectionHeader{
+        button{
+            height: 30px;
+        border-radius: 10px;
+        background-color: white;
+        }
+        .searchContainer {
+            input {
+                border-radius: 10px;
+            }
+        }
+    }
+</style>

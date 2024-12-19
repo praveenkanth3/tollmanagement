@@ -1,37 +1,39 @@
 <template>
-    <div>
-        <DetailPageHeader
-           pageHeading="Admin Toll List Page"
-           :onClickVehicleEntry="onClickVehicleEntry"
-           :loggedInUser="logedin.id"
-           :onClickLogout="onClickLogout"
-        />
-        <div class="sectionHeader">
-            <div class="searchContainer">
-                <h2>Toll List</h2>
-                <span>|</span>
-                <input placeholder="Search toll" v-model="searchInput" />
+    <div class="adminDetail">
+        <div class="headerContainer">
+            <DetailPageHeader
+            pageHeading="Admin Toll List Page"
+            :onClickVehicleEntry="onClickVehicleEntry"
+            :loggedInUser="logedin.id"
+            :onClickLogout="onClickLogout"
+            />
+            <div class="sectionHeader">
+                <div class="searchContainer">
+                    <h2>Toll List</h2>
+                    <span>|</span>
+                    <input placeholder="Search toll" v-model="searchInput" />
+                </div>
+                <div>
+                    <button @click="isAddNewTollModelVisible = true">Add new Toll</button>
+                </div>
             </div>
-            <div>
-                <button @click="isAddNewTollModelVisible = true">Add new Toll</button>
+            <div v-if="!filteredList.length" class="noTolls">No Tolls available</div>
+            <div v-else>
+                <table>
+                    <tr>
+                        <th>Toll name</th>
+                        <th>Car/Jeep/Van</th>
+                        <th>LCV</th>
+                        <th>Truck/Bus</th>
+                        <th>Heavy vehicle</th>
+                    </tr>
+                    <tr v-for="toll in filteredList" :key="toll?.tollName + randomNumber()">
+                        <td>{{ toll?.tollName }}</td>
+                        <td v-for="fare in toll.fareDetails" :key="fare.name + randomNumber()">{{fare.single}}/{{ fare.return }}</td>
+                        <div @click="onClickDeleteToll(toll.tollName)" class="deleteBtn">Delete</div>
+                    </tr>
+                </table>
             </div>
-        </div>
-        <div v-if="!filteredList.length" class="noTolls">No Tolls available</div>
-        <div v-else>
-            <table>
-                <tr>
-                    <th>Toll name</th>
-                    <th>Car/Jeep/Van</th>
-                    <th>LCV</th>
-                    <th>Truck/Bus</th>
-                    <th>Heavy vehicle</th>
-                </tr>
-                <tr v-for="toll in filteredList" :key="toll?.tollName + randomNumber()">
-                    <td>{{ toll?.tollName }}</td>
-                    <td v-for="fare in toll.fareDetails" :key="fare.name + randomNumber()">{{fare.single}}/{{ fare.return }}</td>
-                    <div @click="onClickDeleteToll(toll.tollName)" class="deleteBtn">Delete</div>
-                </tr>
-            </table>
         </div>
         <AddNewTollModel v-show="isAddNewTollModelVisible">
             <template  v-slot:addTollContent>
@@ -144,3 +146,35 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.adminDetail {
+    background-image: url("../images/roadimg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;      
+    background-position: center;
+    height: 100%;
+    .headerContainer {
+        color: white;
+    }
+    table {
+        background-color: chocolate;
+        
+        tr:first-of-type {
+            background-color: inherit;
+        }
+    }
+    .sectionHeader{
+        button{
+            height: 30px;
+        border-radius: 10px;
+        background-color: white;
+        }
+        .searchContainer {
+            input {
+                border-radius: 10px;
+            }
+        }
+    }
+}
+</style>

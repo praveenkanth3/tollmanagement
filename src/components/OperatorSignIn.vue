@@ -68,7 +68,6 @@ export default {
 
     onClickSignIn() {
       if (this.id.length !== 0 && this.password.length >= 8) {
-        console.log('ans')
         let userFromLocalStorage = JSON.parse(localStorage.getItem(this.id));
         if (!userFromLocalStorage) {
           alert('invalid user');

@@ -2,7 +2,7 @@
     <div>
         <h1 class="pageHeading" v-if="pageHeading">{{pageHeading}}</h1>
         <div class="header">
-            <div>Toll Management Application <button v-if="onClickVehicleEntry" @click="onClickVehicleEntry">click to see vehicles entry</button></div>
+            <div>Toll Management Application <button class="vehicleListBtn" v-if="onClickVehicleEntry" @click="onClickVehicleEntry">click to see vehicles entry</button></div>
             <div>
                 <div>Hello,{{ loggedInUser }}</div>
                 <div class="logoutBtn" @click="onClickLogout">Logout</div>
@@ -39,3 +39,9 @@ export default {
 }
 
 </script>
+
+<style lang="scss" scoped>
+.vehicleListBtn{
+    border-radius: 10px;
+}
+</style>
